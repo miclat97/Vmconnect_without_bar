@@ -1,3 +1,7 @@
+vmconnect.exe localhost W11GPUPV
+
+Sleep(14)
+
 $csharpCode = @"
 using System;
 using System.Runtime.InteropServices;
@@ -87,7 +91,7 @@ public class WinAPI_Ultimate {
             int newStyle = (currentStyle & ~WS_POPUP) | WS_CAPTION | WS_THICKFRAME | WS_BORDER;
             SetWindowLong(hwnd, GWL_STYLE, newStyle);
             
-            SetWindowPos(hwnd, IntPtr.Zero, 100, 100, 1024, 768, SWP_FRAMECHANGED);
+            SetWindowPos(hwnd, IntPtr.Zero, 0, 0, 1920, 1080, SWP_FRAMECHANGED);
 
             EnumChildWindows(hwnd, (childHwnd, lParam) => {
                 RECT rect;
