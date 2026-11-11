@@ -1,6 +1,6 @@
 vmconnect.exe localhost W11GPUPV
 
-Sleep(14)
+Sleep(20)
 
 $csharpCode = @"
 using System;
@@ -113,9 +113,15 @@ Add-Type -TypeDefinition $csharpCode -ErrorAction Stop
 $vmProcess = Get-Process -Name "vmconnect" -ErrorAction SilentlyContinue
 
 if ($vmProcess) {
-    $hwnd = $vmProcess[0].MainWindowHandle
-    [WinAPI_Ultimate]::ToggleFullscreen($hwnd)
-    Write-Host "Done, vmconnect.exe ignored DPI and top most on 'fullscreen'" -ForegroundColor Green
+	foreach($vmcon in $vmProcess)
+	{
+		if($vmcon.MainWindowTitle -like '*W11GPUPV*')
+		{
+	        $hwnd = $vmcon.MainWindowHandle
+            [WinAPI_Ultimate]::ToggleFullscreen($hwnd)
+            Write-Host "Done, vmconnect.exe ignored DPI and top most on 'fullscreen'" -ForegroundColor Green
+		}
+	}
 } else {
     Write-Host "vmconnect.exe not found" -ForegroundColor Red
 }
